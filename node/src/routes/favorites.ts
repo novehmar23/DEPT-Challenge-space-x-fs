@@ -5,10 +5,11 @@ import {
   getFavorites,
   removeFavorite,
 } from "../controllers/favorites";
-import { attachCurrentUser } from "../middlewares/attachCurrentUser";
+import { auth } from "../middlewares/auth";
 
 export default (router) => {
+  router.use(auth);
   router.get("/favorites", getFavorites);
-  router.post("/favorites/:flight_number", attachCurrentUser, addFavorite);
-  router.delete("/favorites/:flight_number", attachCurrentUser, removeFavorite);
+  router.post("/favorites/:flight_number", addFavorite);
+  router.delete("/favorites/:flight_number", removeFavorite);
 };

@@ -1,3 +1,48 @@
+## Local Development
+
+To run the backend locally for development and debugging in your IDE, use:
+
+```bash
+yarn start-dev
+```
+
+Remember to install the dependences and run the migrations. To run it completly in your local you need to run:
+
+```bash
+yarn
+yarn start-dev
+yarn migration:run
+```
+
+## API Endpoints & Authentication
+
+This API requires Bearer Token authentication for all endpoints.
+
+**Authentication Flow:**
+
+1.  **Obtain Token:** Make a `POST` request to `http://localhost:3000/api/admin/token` with the following JSON body (e.g.):
+
+    ```json
+    {
+      "userId": 14
+    }
+    ```
+
+    The response will contain your authentication token.
+
+2.  **Authorize Requests:** Include the token in the `Authorization` header of subsequent requests as a Bearer token.
+
+**Impact of Auth Token on Endpoints:**
+
+The following endpoints affect data tied to the authenticated user (as identified by the auth token):
+
+- `POST http://localhost:3000/api/favorites/:flight_number`.
+- `DELETE http://localhost:3000/api/favorites/:flight_number`
+
+---
+
+### Previous Readme:
+
 ## Node
 
 This app is dockerize, you just need to run `yarn dev`
