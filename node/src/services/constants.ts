@@ -1,0 +1,2 @@
+export const NOT_PROVIDED_STRING = "NOT_PROVIDED";
+export const NOT_PROVIDED_NUMBER = -1;
