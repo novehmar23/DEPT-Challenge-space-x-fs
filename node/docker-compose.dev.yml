@@ -7,6 +7,8 @@ services:
     build:
       context: .
       target: development
+    environment:
+      - APP_ENV=docker
     volumes:
       - ./src:/app/src
     ports:
