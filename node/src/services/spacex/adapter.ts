@@ -6,6 +6,7 @@ export const adaptLaunch = (launch: SpaceXLaunch): Launch => ({
   flight_number: launch.flight_number ?? NOT_PROVIDED_NUMBER,
   mission_name: launch.mission_name || NOT_PROVIDED_STRING,
   mission_patch: launch.links?.mission_patch || NOT_PROVIDED_STRING,
+  launch_date_unix: launch.launch_date_unix ?? NOT_PROVIDED_NUMBER,
   details: launch.details || NOT_PROVIDED_STRING,
   rocket: {
     rocket_id: launch.rocket?.rocket_id || NOT_PROVIDED_STRING,
@@ -14,6 +15,7 @@ export const adaptLaunch = (launch: SpaceXLaunch): Launch => ({
     cost_per_launch: NOT_PROVIDED_NUMBER,
     company: NOT_PROVIDED_STRING,
   },
+  favorite: false,
 });
 
 export const adaptRocket = (rocket: SpaceXRocket): Rocket => ({

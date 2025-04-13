@@ -1,14 +1,17 @@
+import { Favorites } from "../../entities/favorites";
 import { Launch, Rocket } from "../../types/launch";
 import { NOT_PROVIDED_STRING, NOT_PROVIDED_NUMBER } from "../constants";
 
 export const adaptLaunchData = (
   launch: Launch,
+  userFavorites: Favorites[],
   rocket: Rocket | undefined
 ): Launch => {
   return {
     flight_number: launch.flight_number,
     mission_name: launch.mission_name,
     mission_patch: launch.mission_patch,
+    launch_date_unix: launch.launch_date_unix,
     details: launch.details,
     rocket: {
       rocket_id: rocket?.rocket_id,
@@ -17,5 +20,8 @@ export const adaptLaunchData = (
       cost_per_launch: rocket?.cost_per_launch ?? NOT_PROVIDED_NUMBER,
       company: rocket?.company || NOT_PROVIDED_STRING,
     },
+    favorite: userFavorites.some(
+      (fav) => fav.flight_number === launch.flight_number
+    ),
   };
 };
