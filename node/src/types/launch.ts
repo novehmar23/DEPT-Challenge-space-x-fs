@@ -10,6 +10,8 @@ export interface Launch {
   flight_number: number;
   mission_name: string;
   mission_patch: string;
+  launch_date_unix: number;
   details: string;
   rocket: Rocket;
+  favorite?: boolean;
 }
