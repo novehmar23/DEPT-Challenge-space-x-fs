@@ -1,14 +1,19 @@
 import { DataSource } from "typeorm";
 
+const appEnv = process.env.APP_ENV;
+
 export const AppDataSource = new DataSource({
   type: "sqlite",
   database: "./src/database/spacex.sql",
-  entities: [
-    "./dist/entities/**/*{.ts,.js}", //For compiled environments
-    "./src/entities/**/*{.ts,.js}", //For development (nodemon)
-  ],
+  entities:
+    appEnv === "docker"
+      ? ["./dist/entities/**/*{.ts,.js}"]
+      : ["./src/entities/**/*{.ts,.js}"],
   logging: true,
   synchronize: false,
   migrationsRun: false,
-  migrations: ["./dist/database/migrations/**/*{.ts,.js}"],
+  migrations:
+    appEnv === "docker"
+      ? ["./dist/database/migrations/**/*{.ts,.js}"]
+      : ["./src/database/migrations/**/*{.ts,.js}"],
 });
