@@ -1,9 +1,10 @@
 .pagination {
   display: flex;
   align-items: center;
+  justify-self: end;
+  margin-right: 6%;
 
   div {
-
     height: 32px;
     padding: 5px;
     display: flex;

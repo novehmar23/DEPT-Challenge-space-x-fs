@@ -37,7 +37,11 @@ export const LaunchesList = () => {
 
   return (
     <div className="launches-list-container">
-      <Search value={searchText} onChange={setSearchText} />
+      <Search
+        value={searchText}
+        onChange={setSearchText}
+        total={filteredLaunches.length}
+      />
       <div className="launches-list">
         {filteredLaunches
           .filter(
@@ -47,7 +51,7 @@ export const LaunchesList = () => {
           )
           .map((launch, i) => (
             <LaunchCard
-              key={launch.flight_number}
+              key={launch.flight_number + i}
               launch={launch}
               updateFavorite={() => {}}
             />

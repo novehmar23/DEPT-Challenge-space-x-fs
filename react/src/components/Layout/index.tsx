@@ -12,7 +12,9 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <header>
-        <img src={logo} alt="SpaceX" />
+        <div className="header-logo">
+          <img src={logo} alt="SpaceX" />
+        </div>
         <div className="header-bottom">
           Launches
           <div className="tabs">
