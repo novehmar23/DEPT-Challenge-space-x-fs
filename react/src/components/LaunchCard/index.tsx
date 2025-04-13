@@ -25,7 +25,14 @@ export const LaunchCard = ({ launch, updateFavorite }: LaunchCardProps) => {
         <h3>{launch.mission_name}</h3>
         <span className="details">{launch.details}</span>
         <span className="date">
-          {new Date(launch.launch_date_unix).toDateString()}
+          {new Date(launch.launch_date_unix * 1000).toLocaleDateString(
+            "en-US",
+            {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            }
+          )}
         </span>
         <Star
           onClick={handleClickFavorite}
