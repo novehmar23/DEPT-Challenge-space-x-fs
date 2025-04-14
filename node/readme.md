@@ -6,7 +6,7 @@ To run the backend locally for development and debugging in your IDE, use:
 yarn start-dev
 ```
 
-Remember to install the dependences and run the migrations. To run it completly in your local you need to run:
+Remember to install the dependencies and run the migrations. To run it completely on your local, you also need to run:
 
 ```bash
 yarn
