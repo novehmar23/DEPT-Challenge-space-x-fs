@@ -1,0 +1,18 @@
+.launches-list-container {
+  padding: 20px;
+
+  .launches-list {
+    display: grid;
+    padding-top: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 413px));
+    justify-content: center;
+    column-gap: 37px;
+    row-gap: 37px;
+    width: 100%;
+    justify-self: center;
+  }
+
+  .pagination {
+    margin-top: 20px;
+  }
+}
