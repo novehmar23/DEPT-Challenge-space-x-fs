@@ -5,14 +5,36 @@ import "./index.scss";
 
 interface LaunchCardProps {
   launch: Launch;
-  updateFavorite: Function;
+  launchIndex: number;
+  setLaunches: Function;
 }
 
-export const LaunchCard = ({ launch, updateFavorite }: LaunchCardProps) => {
+export const LaunchCard = ({
+  launch,
+  launchIndex,
+  setLaunches,
+}: LaunchCardProps) => {
   const handleClickFavorite = async () => {
-    await (launch.favorite
-      ? removeFavorite(launch.flight_number)
-      : addFavorite(launch.flight_number));
+    try {
+      const newFavoriteState = !launch.favorite;
+
+      if (newFavoriteState) {
+        await addFavorite(launch.flight_number);
+      } else {
+        await removeFavorite(launch.flight_number);
+      }
+
+      setLaunches((prevLaunches: Launch[]) => {
+        const updatedLaunches = [...prevLaunches];
+        updatedLaunches[launchIndex] = {
+          ...updatedLaunches[launchIndex],
+          favorite: newFavoriteState,
+        };
+        return updatedLaunches;
+      });
+    } catch (error) {
+      console.error("Error updating favorite: ", error);
+    }
   };
 
   return (

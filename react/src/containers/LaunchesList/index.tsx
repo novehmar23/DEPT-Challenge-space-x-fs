@@ -58,13 +58,21 @@ export const LaunchesList = () => {
               i >= CARDS_PER_PAGE * (currentPage - 1) &&
               i < CARDS_PER_PAGE * currentPage
           )
-          .map((launch, i) => (
-            <LaunchCard
-              key={launch.flight_number + i}
-              launch={launch}
-              updateFavorite={() => {}}
-            />
-          ))}
+          .map((launch, i) => {
+            const launchIndex = launches.findIndex(
+              (currentLaunch) =>
+                currentLaunch.flight_number === launch.flight_number
+            );
+
+            return (
+              <LaunchCard
+                key={launch.flight_number + i}
+                launch={launch}
+                launchIndex={launchIndex}
+                setLaunches={setLaunches}
+              />
+            );
+          })}
       </div>
       <Pagination
         value={currentPage}
