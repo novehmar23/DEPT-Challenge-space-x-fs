@@ -1,4 +1,4 @@
-import { useState, SetStateAction, Dispatch } from "react";
+import { SetStateAction, Dispatch } from "react";
 import searchIcon from "assets/images/search.svg";
 import closeIcon from "assets/images/close.svg";
 import "./index.scss";

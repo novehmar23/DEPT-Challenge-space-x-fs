@@ -6,17 +6,21 @@ import { getLaunches } from "../../api";
 import "./index.scss";
 
 export const LaunchesList = () => {
-  const [launches, setLaunches] = useState<Launch[]>([]);
+  const [launchesMap, setLaunchesMap] = useState<Map<number, Launch>>(
+    new Map()
+  );
   const [filteredLaunches, setFilteredLaunches] = useState<Launch[]>([]);
   const [searchText, setSearchText] = useState<string>("");
   const { showAll } = useContext(ModeContext);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
+  useEffect(() => setCurrentPage(1), [showAll]);
+
   const filterLaunches = () => {
-    setCurrentPage(1);
+    const launchesArray = Array.from(launchesMap.values());
 
     return setFilteredLaunches(
-      launches.filter((l: Launch) => {
+      launchesArray.filter((l: Launch) => {
         const favoriteFilter = showAll || l.favorite;
 
         const searchFilter =
@@ -31,8 +35,12 @@ export const LaunchesList = () => {
 
   const loadLaunches = async () => {
     try {
-      const launches = await getLaunches();
-      setLaunches(launches);
+      const launchesArray = await getLaunches();
+      const newMap = new Map();
+      launchesArray.forEach((launch) => {
+        newMap.set(launch.flight_number, launch);
+      });
+      setLaunchesMap(newMap);
     } catch (error) {
       console.log(error);
     }
@@ -42,7 +50,18 @@ export const LaunchesList = () => {
     loadLaunches();
   }, []);
 
-  useEffect(filterLaunches, [searchText, showAll, launches]);
+  useEffect(filterLaunches, [searchText, showAll, launchesMap]);
+
+  useEffect(() => {
+    const launchesInPage = filteredLaunches.filter(
+      (_: Launch, i: number) =>
+        i >= CARDS_PER_PAGE * (currentPage - 1) &&
+        i < CARDS_PER_PAGE * currentPage
+    );
+    if (launchesInPage.length === 0 && currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  }, [filteredLaunches, currentPage]);
 
   return (
     <div className="launches-list-container">
@@ -59,17 +78,12 @@ export const LaunchesList = () => {
               i < CARDS_PER_PAGE * currentPage
           )
           .map((launch, i) => {
-            const launchIndex = launches.findIndex(
-              (currentLaunch) =>
-                currentLaunch.flight_number === launch.flight_number
-            );
-
             return (
               <LaunchCard
                 key={launch.flight_number + i}
                 launch={launch}
-                launchIndex={launchIndex}
-                setLaunches={setLaunches}
+                launchIndex={i}
+                setLaunchesMap={setLaunchesMap}
               />
             );
           })}
